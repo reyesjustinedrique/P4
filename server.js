@@ -5,10 +5,11 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
-var articleOne = {
-  title: 'ScheduList'
-  content: `   
-     <ul>
+var articles = {
+	'article-one': {
+	  title: 'ScheduList'
+	  content: `   
+		<ul>
 			<li><a class="active" href="index.html">Home</a></li>
 			<li><a href="article-one.html">About</a></li>
 			<li><a href="article-two.html">Contacts</a></li>
@@ -21,9 +22,48 @@ var articleOne = {
 
 			<h4>Dev Team</h4>
 			<p class="names">Von Denuelle Tandoc &emsp; Justin Edrique Reyes &emsp; Jackson Alipao &emsp;</p>
+		</div>
+		<div class="footer">
+			<p>© WeebDev 2021</p>
 		</div>`
+	},
+	'article-two': {
+		title: 'ScheduList'
+	  	content: `   
+		<ul>
+			<li><a class="active" href="index.html">Home</a></li>
+			<li><a href="article-one.html">About</a></li>
+			<li><a href="article-two.html">Contacts</a></li>
+			<li><a href="article-three.html">Download</a></li>
+		</ul>
+		<div class="logos">
+			<h5 class="artclii">Contact Us</h5>
+			<img class="fb" src="imgs/messenger.png"><p class="lnk"><a href="https://www.facebook.com/GordonCollegeCcs">Send Private Message</a></p><br>
+			<img class="gm" src="imgs/gmail.png"><p class="lnkb"><a href = "contactus@gordoncollegeccs.edu.ph">Send Email</a></p>
+		</div>
+		<div class="footer">
+			<p>© WeebDev 2021</p>
+		</div>`
+	},
+    	'article-three': {
+		title: 'ScheduList'
+	  	content: `   
+		<ul>
+			<li><a class="active" href="index.html">Home</a></li>
+			<li><a href="article-one.html">About</a></li>
+			<li><a href="article-two.html">Contacts</a></li>
+			<li><a href="article-three.html">Download</a></li>
+		</ul>
+		<div class="container">
+			<h5 class="artcliii">Coming Soon ...</h5>
+			<img class="droid" src="imgs/droid.png">
+		</div>
+		<div class="footer">
+			<p>© WeebDev 2021</p>
+		</div>`
+	},
 };
-
+		
 function createTemplate (data){
   var title = data.title;
   var content = data.content;
@@ -49,16 +89,9 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/article-one', function(req, res){
-  res.send(createTemplate(articleOne));
-});
-
-app.get('/article-two', function(req, res){
-  res.send('Article two requested and will be served here');
-});
-
-app.get('/article-three', function(req, res){
-  res.send('Article three requested and will be served here');
+app.get('/articleName', function(req, res){
+	var articleName = req.params.articleName;
+	res.send(createTemplate(articles[articleName]));
 });
 
 app.get('/ui/:style.css', function (req, res) {
